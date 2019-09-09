@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t alanmorgan/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run alanmorgan/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t alanmorgan/multi-client ./client
+  - docker build -t alanmorgan/multi-nginx ./nginx
+  - docker build -t alanmorgan/multi-server ./server
+  - docker build -t alanmorgan/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push alanmorgan/multi-client
+  - docker push alanmorhan/multi-nginx
+  - docker push alanmorgan/multi-worker
+  - docker push  alanmorgan/multi-worker
