@@ -17,4 +17,4 @@ after_success:
   - docker push alanmorgan/multi-client
   - docker push alanmorhan/multi-nginx
   - docker push alanmorgan/multi-worker
-  - docker push  alanmorgan/multi-worker
+  - docker push alanmorgan/multi-worker
